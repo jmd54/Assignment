@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:grocery_store_app/Model/grocery_items.dart';
 import 'package:grocery_store_app/Model/store.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 class GroceryItems extends StatefulWidget {
   final int storeId;
   final StoreElement storeDetails;
-
   GroceryItems(this.storeId, this.storeDetails);
 
 
@@ -36,7 +34,6 @@ class _GroceryItemsState extends State<GroceryItems> {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print(data);
       setState(() {
         // storeDetails = storeProductFromJson(response.body).store1;
         groceryItems = data["store${widget.storeId}"]["groceryItems"];
@@ -94,7 +91,6 @@ class ShimmerLoading extends StatelessWidget {
 
 class StoreDetailsCard extends StatelessWidget {
   final StoreElement storeDetails;
-
   StoreDetailsCard(this.storeDetails);
 
   @override
@@ -135,14 +131,35 @@ class GroceryItemList extends StatelessWidget {
         return Card(
           child: ListTile(
             leading: CachedNetworkImage(
-              imageUrl: item["image"],
+              imageUrl: item["image"],height: 80,width: 80, fit: BoxFit.cover,
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
-            title: Text(item["name"]),
-            subtitle: Text("Price: ${item["price"]} - sDiscount: ${item["discountPercentage"]}%"),
+            title: Padding(
+              padding: const EdgeInsets.only(left:15),
+              child: Text(item["name"],),
+            ) ,
+            
+            subtitle: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                  
+                  children: [
+                    Container(
+                      height: 25,
+                      width: 50,
+                      decoration: BoxDecoration(color: Colors.red.withOpacity(0.5),borderRadius: BorderRadius.circular(5)),
+                      child: Center(child: Text("${item["discountPercentage"]}%",style: TextStyle(fontSize: 16),)),
+                    ),
+                    SizedBox(width: 30 ),
+                    Text("\$ ${item["price"]}",style: TextStyle(color: const Color.fromARGB(255, 45, 204, 50),fontWeight: FontWeight.bold  ))
+                  ],
+                ),
+            )
+            // subtitle: Text("Price: ${item["price"]} - Discount: ${item["discountPercentage"]}%"),
           ),
         );
+        
       },
     );
   }

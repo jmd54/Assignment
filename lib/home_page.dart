@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_store_app/Screens/list_of_stores.dart';
+import 'package:grocery_store_app/Model/list_of_stores.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
       //   title: const Center(child: Text('Grocery Store App')),
       // ),
       body: Container(
-        color: Color.fromARGB(255, 201, 114, 216),
+        // color: Color.fromARGB(255, 214, 214, 223),
         child: Center(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
